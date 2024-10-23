@@ -25,7 +25,7 @@ def normalize_signals(X):
     return (X - mean) / std
 # 这部分使用上准确率会更高
 
-def create_dataloaders(data_dir, batch_size, normalize=False, validation_split=0.2):
+def create_dataloaders_ucihar(data_dir, batch_size, normalize=False, validation_split=0.2):
     X_train = load_inertial_signals(data_dir, 'train')
     X_test = load_inertial_signals(data_dir, 'test')
 

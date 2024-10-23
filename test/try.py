@@ -4,99 +4,23 @@ script_dir = os.path.dirname(os.path.abspath('__file__'))
 root_dir = os.path.abspath(os.path.join(script_dir, '..'))
 print(root_dir)
 sys.path.append(root_dir)
-import numpy as np
 import logging
 import torch
-import torch.nn as nn
 import torch.optim as optim
 from models.WPTCN import WPTCN
-from sklearn.metrics import accuracy_score, confusion_matrix, f1_score
-from tqdm import tqdm
 
-from utils.util import load_config
-from utils.data_processing import create_dataloaders
-from data_proc import get_processor
+# from utils.util import load_config
+# from utils.ucihar_proc import create_dataloaders
+# from data_proc import get_processor
+from utils.util import load_dataset, train_one_epoch, evaluate
 from utils.visualization import plot_results, calculate_latency, calculate_memory_usage, calculate_model_complexity
-
-
-
-def train_one_epoch(model, device, dataloader, criterion, optimizer):
-    model.train()
-    running_loss = 0.0
-    all_preds = []
-    all_labels = []
-
-    for inputs, labels in tqdm(dataloader, desc="Training", leave=False):
-        inputs, labels = inputs.to(device), labels.to(device)
-
-        optimizer.zero_grad()
-
-        outputs = model(inputs)
-        loss = criterion(outputs, labels)
-        loss.backward()
-        optimizer.step()
-
-        running_loss += loss.item() * inputs.size(0)
-
-        _, preds = torch.max(outputs, 1)
-        all_preds.append(preds.cpu().numpy())
-        all_labels.append(labels.cpu().numpy())
-
-    epoch_loss = running_loss / len(dataloader.dataset)
-    epoch_acc = accuracy_score(np.concatenate(all_labels), np.concatenate(all_preds))
-
-    return epoch_loss, epoch_acc
-
-def evaluate(model, device, dataloader, criterion, mode='Validation'):
-    model.eval()
-    running_loss = 0.0
-    all_preds = []
-    all_labels = []
-
-    with torch.no_grad():
-        for inputs, labels in tqdm(dataloader, desc=f"Evaluating ({mode})", leave=False):
-            inputs, labels = inputs.to(device), labels.to(device)
-
-            outputs = model(inputs)
-            loss = criterion(outputs, labels)
-
-            running_loss += loss.item() * inputs.size(0)
-
-            _, preds = torch.max(outputs, 1)
-            all_preds.append(preds.cpu().numpy())
-            all_labels.append(labels.cpu().numpy())
-
-    # 拼接所有预测值和真实标签
-    all_preds = np.concatenate(all_preds)
-    all_labels = np.concatenate(all_labels)
-
-    # 计算损失和准确率
-    epoch_loss = running_loss / len(dataloader.dataset)
-    epoch_acc = accuracy_score(all_labels, all_preds)
-
-    # 计算混淆矩阵
-    conf_matrix = confusion_matrix(all_labels, all_preds)
-
-    # 计算F1分数（宏平均）
-    f1_macro = f1_score(all_labels, all_preds, average='macro')
-
-    # 计算F1分数（微平均）
-    f1_micro = f1_score(all_labels, all_preds, average='micro')
-
-    # 打印混淆矩阵和F1分数
-    print(f"{mode} Loss: {epoch_loss:.4f} Acc: {epoch_acc:.4f}")
-    print(f"{mode} Confusion Matrix:\n{conf_matrix}")
-    print(f"{mode} F1 Score (Macro): {f1_macro:.4f}")
-    print(f"{mode} F1 Score (Micro): {f1_micro:.4f}")
-
-    return epoch_loss, epoch_acc, conf_matrix, f1_macro, f1_micro
 
 
 def main():
     # 配置日志
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-    data_dir = '../../data/UCI-HAR-Dataset'  # 数据集路径
+    dataset = 'USC-HAD'  # 数据集名称
     batch_size = 32
     num_epochs = 20  # 根据需要调整
     learning_rate = 1e-3
@@ -106,20 +30,9 @@ def main():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"使用设备: {device}")
 
-    # 创建数据加载器
-    train_loader, val_loader, test_loader = create_dataloaders(
-        data_dir=data_dir,
-        batch_size=batch_size,
-        normalize=True,
-        validation_split=validation_split
-    )
+    train_loader, val_loader, test_loader, input_length, num_input_channels, num_classes = load_dataset(dataset, batch_size, validation_split)
 
-    # 获取数据维度信息
-    input_length = 128  # 时间步长
-    num_input_channels = 9  # 通道数量（传感器数量）
-    num_classes = 6  # UCI-HAR 数据集的活动类别数
-
-    # 初始化模型
+    # 初始化WPTCN模型
     model_parameters = {
         'num_input_channels': num_input_channels,   # 输入通道数
         'input_length': input_length,               # 输入序列长度（当前未使用）
@@ -134,13 +47,11 @@ def main():
         'normalization_eps': 1e-5,                  # 归一化的 epsilon
         'normalization_affine': True                # 是否使用仿射变换
     }
-    # 检查设备
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     logging.info(f"Using device: {device}")
-
-    # 初始化模型
     model = WPTCN(**model_parameters)
     model.to(device)
+
 
     logging.info(f'Model:\n{model}')
 
@@ -203,8 +114,8 @@ def main():
     memory_usage = calculate_memory_usage(model, device, test_loader)
 
     # 计算模型参数量和FLOPs
-    input_size = (1, model_parameters['num_input_channels'], model_parameters['input_length'])  # 1 表示 batch_size 为 1
-    flops, params = calculate_model_complexity(model, input_size)
+    # input_size = (1, model_parameters['num_input_channels'], model_parameters['input_length'])  # 1 表示 batch_size 为 1
+    # flops, params = calculate_model_complexity(model, input_size)
 
 if __name__ == "__main__":
     main()
