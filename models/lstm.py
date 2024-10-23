@@ -2,14 +2,15 @@ import torch.nn as nn
 
 '''Long Short Term Memory Network'''
 class LSTM(nn.Module):
-    def __init__(self, train_shape, category):
+    def __init__(self, num_input_channels, num_classes, input_length):
         super().__init__()
         '''
-            train_shape: 总体训练样本的shape
-            category: 类别数
+            num_input_channels: 输入通道数
+            num_classes: 类别数
+            input_length: 输入序列长度
         '''
-        self.lstm = nn.LSTM(train_shape[-1], 512, 2, batch_first=True)
-        self.fc = nn.Linear(512, category)
+        self.lstm = nn.LSTM(input_length, 512, 2, batch_first=True)
+        self.fc = nn.Linear(512, num_classes)
         
     def forward(self, x):
         '''

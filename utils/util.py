@@ -64,6 +64,20 @@ def load_dataset(dataset, batch_size, validation_split):
         )
         input_length = 100  # 时间步长（根据 USC-HAD 的窗口大小）
         num_classes = 12  # USC-HAD 数据集的活动类别数
+    elif dataset == 'DASA':
+        from utils.dasa_proc import create_dataloaders_dasa
+        train_loader, val_loader, test_loader = create_dataloaders_dasa(
+            data_dir='../../data/Daily_and_Sports_Activities/data',
+            batch_size=batch_size,
+            validation_split=validation_split,
+            window_size=125,           # DASA 的滑窗大小
+            overlap_rate=0.4,          # DASA 的滑窗重叠率
+            validation_subjects=None,  # 留一法验证集，设为 None 使用平均法
+            z_score=True               # 是否进行标准化
+        )
+        input_length = 125  # 时间步长
+        num_input_channels = 45  # 通道数量（DASA 的传感器数据维度）
+        num_classes = 19  # DASA 数据集的活动类别数
     else:
         raise ValueError(f"Unknown dataset: {dataset}")
     return train_loader, val_loader, test_loader, input_length, num_input_channels, num_classes
