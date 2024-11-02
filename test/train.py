@@ -8,10 +8,12 @@ sys.path.append(root_dir)
 import torch
 import torch.nn as nn
 import torch.optim as optim
-# 导入你自己的模型，如 CNN, ResNet 等
+
 from models.cnn import CNN
 from models.resnet import ResNet
 from models.lstm import LSTM
+from models.fits import BackboneFITS
+from models.frets import BackboneFreTS
 from models.channel_attention import ChannelAttentionNeuralNetwork
 from utils.util import evaluate, train_one_epoch, load_dataset
 from utils.visualization import plot_results
@@ -22,7 +24,7 @@ def main():
     num_epochs = 10
     learning_rate = 1e-3
     validation_split = 0.2
-    dataset_name = 'OPPORTUNITY'  # 根据需要选择数据集
+    dataset_name = 'UCI-HAR'  # 根据需要选择数据集
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     # 加载数据集
@@ -31,9 +33,11 @@ def main():
     # 定义模型列表，传入 input_length 参数
     model_list = {
         # 'CNN': CNN(num_input_channels, num_classes, input_length),
-        'ResNet': ResNet(num_input_channels, num_classes, input_length),
+        # 'ResNet': ResNet(num_input_channels, num_classes, input_length),
         # 'LSTM': LSTM(num_input_channels, num_classes, input_length),
-        'CANet': ChannelAttentionNeuralNetwork(num_input_channels, num_classes, input_length)
+        # 'CANet': ChannelAttentionNeuralNetwork(num_input_channels, num_classes, input_length),
+        # 'FITS': BackboneFITS(n_steps=input_length, n_features=num_input_channels, n_pred_steps=10, cut_freq=32, individual=False, num_classes=num_classes),
+        'FreTS': BackboneFreTS(n_steps=input_length, n_features=num_input_channels, embed_size=9, n_pred_steps=128, hidden_size=64, n_classes=num_classes, channel_independence=False)
     }
 
     # 用于保存每个epoch的准确率、F1分数和混淆矩阵

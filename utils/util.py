@@ -1,3 +1,5 @@
+# utils/util.py
+
 import yaml
 import torch
 import numpy as np
@@ -9,77 +11,100 @@ def load_config(config_file):
     with open(config_file, 'r') as file:
         return yaml.safe_load(file)
     
-def load_dataset(dataset, batch_size, validation_split):
+def load_dataset(dataset, batch_size, validation_split, client_id=None, num_clients=None):
+    """
+    加载数据集。
+    
+    参数:
+    - dataset (str): 数据集名称。
+    - batch_size (int): 批大小。
+    - validation_split (float): 验证集比例。
+    - client_id (str, optional): 客户端ID，例如 "client_1"。默认为None。
+    - num_clients (int, optional): 客户端总数。默认为None。
+    
+    返回:
+    - train_loader, val_loader, test_loader, input_length, num_input_channels, num_classes
+    """
     if dataset == 'UCI-HAR':
         from utils.ucihar_proc import create_dataloaders_ucihar
-        train_loader, val_loader, test_loader = create_dataloaders_ucihar(
+        train_loader, val_loader, test_loader, input_length, num_input_channels, num_classes = create_dataloaders_ucihar(
             data_dir='../../data/UCI-HAR-Dataset',
             batch_size=batch_size,
             normalize=True,
-            validation_split=validation_split
+            validation_split=validation_split,
+            client_id=client_id,
+            num_clients=num_clients
         )
-        input_length = 128  # 时间步长
-        num_input_channels = 9  # 通道数量（传感器数量）
-        num_classes = 6  # UCI-HAR 数据集的活动类别数
     elif dataset == 'WISDM':
         from utils.wisdm_proc import create_dataloaders_wisdm
         train_loader, val_loader, test_loader = create_dataloaders_wisdm(
             data_dir='../../data/WISDM_ar_v1.1',
             batch_size=batch_size,
             validation_split=validation_split,
-            normalize=True          # 是否进行标准化
+            normalize=True,
+            client_id=client_id,
+            num_clients=num_clients
         )
-        input_length = 128  # 时间步长
-        num_input_channels = 3  # 通道数量（x, y, z）
-        num_classes = 6  # WISDM 数据集的活动类别数（根据映射）
+        input_length = 128
+        num_input_channels = 3
+        num_classes = 6
     elif dataset == 'PAMAP2':
         from utils.pamap_proc import create_dataloaders_pamap2
         train_loader, val_loader, test_loader = create_dataloaders_pamap2(
             data_dir='../../data/PAMAP2_Dataset/Protocol',
             batch_size=batch_size,
             validation_split=validation_split,
-            normalize=True          # 是否进行标准化
+            normalize=True,
+            client_id=client_id,
+            num_clients=num_clients
         )
-        input_length = 171  # 时间步长（根据 PAMAP2 的窗口大小）
-        num_input_channels = 36  # 通道数量（PAMAP2 的传感器数据维度）
-        num_classes = 12  # PAMAP2 数据集的活动类别数
+        input_length = 171
+        num_input_channels = 36
+        num_classes = 12
     elif dataset == 'OPPORTUNITY':
         from utils.oppo_proc import create_dataloaders_oppo
         train_loader, val_loader, test_loader = create_dataloaders_oppo(
             data_dir='../../data/OpportunityUCIDataset/dataset',
             batch_size=batch_size,
             validation_split=validation_split,
-            normalize=True          # 是否进行标准化
+            normalize=True,
+            client_id=client_id,
+            num_clients=num_clients
         )
-        input_length = 90  # 时间步长（根据 OPPORTUNITY 的窗口大小 * 3倍，不然卷积把时间步卷到小于1了）
-        num_input_channels = 113  # 通道数量（OPPORTUNITY 的传感器数据维度）
-        num_classes = 17  # OPPORTUNITY 数据集的活动类别数
+        input_length = 90
+        num_input_channels = 113
+        num_classes = 17
     elif dataset == 'USC-HAD':
         from utils.uschad_proc import create_dataloaders_uschad
         train_loader, val_loader, test_loader, num_input_channels = create_dataloaders_uschad(
             data_dir='../../data/USC-HAD',
             batch_size=batch_size,
             validation_split=validation_split,
-            normalize=True          # 是否进行标准化
+            normalize=True,
+            client_id=client_id,
+            num_clients=num_clients
         )
-        input_length = 100  # 时间步长（根据 USC-HAD 的窗口大小）
-        num_classes = 12  # USC-HAD 数据集的活动类别数
+        input_length = 100
+        num_classes = 12
     elif dataset == 'DASA':
         from utils.dasa_proc import create_dataloaders_dasa
         train_loader, val_loader, test_loader = create_dataloaders_dasa(
             data_dir='../../data/Daily_and_Sports_Activities/data',
             batch_size=batch_size,
             validation_split=validation_split,
-            window_size=125,           # DASA 的滑窗大小
-            overlap_rate=0.4,          # DASA 的滑窗重叠率
-            validation_subjects=None,  # 留一法验证集，设为 None 使用平均法
-            z_score=True               # 是否进行标准化
+            window_size=125,
+            overlap_rate=0.4,
+            validation_subjects=None,
+            z_score=True,
+            client_id=client_id,
+            num_clients=num_clients
         )
-        input_length = 125  # 时间步长
-        num_input_channels = 45  # 通道数量（DASA 的传感器数据维度）
-        num_classes = 19  # DASA 数据集的活动类别数
+        input_length = 125
+        num_input_channels = 45
+        num_classes = 19
     else:
         raise ValueError(f"Unknown dataset: {dataset}")
+    
     return train_loader, val_loader, test_loader, input_length, num_input_channels, num_classes
 
 def train_one_epoch(model, device, dataloader, criterion, optimizer):
