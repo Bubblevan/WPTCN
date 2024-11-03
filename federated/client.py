@@ -68,7 +68,7 @@ def main():
     num_clients = args.num_clients
 
     # 加载数据
-    dataset = 'UCI-HAR'  # 可根据实际情况更改
+    dataset = 'USC-HAD'  # 可根据实际情况更改
     batch_size = 32
     validation_split = 0.2
 

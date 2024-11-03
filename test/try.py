@@ -20,7 +20,7 @@ def main():
     # 配置日志
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-    dataset = 'UCI-HAR'  # 数据集名称
+    dataset = 'USC-HAD'  # 数据集名称
     batch_size = 32
     num_epochs = 20  # 根据需要调整
     learning_rate = 1e-3

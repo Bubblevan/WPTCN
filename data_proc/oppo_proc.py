@@ -6,8 +6,8 @@ import pandas as pd
 import torch
 from torch.utils.data import DataLoader, TensorDataset, random_split
 
-WINDOW_SIZE = 90  # 窗口大小
-OVERLAP_RATE = 0.5  # 重叠率
+WINDOW_SIZE = 90  # 默认窗口大小
+OVERLAP_RATE = 0.5  # 默认重叠率
 VALIDATION_FILES = {'S2-ADL4.dat', 'S2-ADL5.dat', 'S3-ADL4.dat', 'S3-ADL5.dat'}
 
 def load_oppo_data(data_dir):
@@ -23,7 +23,7 @@ def load_oppo_data(data_dir):
         if not file.endswith('.dat'):
             continue  # 只处理 .dat 文件
 
-        print(f'Processing File: {file}', end='')
+        print(f'Processing File: {file}', end=' ')
         is_validation = file in VALIDATION_FILES
         if is_validation:
             print('   ----   Validation Data')
@@ -31,22 +31,17 @@ def load_oppo_data(data_dir):
             print()
 
         file_path = os.path.join(data_dir, file)
-        # 根据提供的 OPPO 函数，选择特定列
-        # 选择的列：[1 to 46], [50 to 58], [63 to 71], [76 to 84], [89 to 97], [102 to 133], [249]
         select_col = list(range(1, 46)) + list(range(50, 59)) + list(range(63, 72)) + list(range(76, 85)) + list(range(89, 98)) + list(range(102, 134)) + [249]
 
-        # 读取数据
         try:
             content = pd.read_csv(file_path, sep=' ', usecols=select_col, engine='python')
         except Exception as e:
             print(f'Error reading {file}: {e}')
             continue
 
-        # 线性插值填充 NaN
         x = content.iloc[:, :-1].interpolate(method='linear', limit_direction='both', axis=0).to_numpy()
         y = content.iloc[:, -1].to_numpy()
 
-        # 去除标签为0的样本
         x = x[y != 0]
         y = y[y != 0]
 
@@ -62,13 +57,11 @@ def sliding_window(array, windowsize, overlaprate, padding_size=None):
     num_windows = (len(array) - windowsize) // step + 1
     windows = np.array([array[i*step : i*step + windowsize] for i in range(num_windows)])
     
-    # 如果窗口的时间维度小于指定值，执行 padding
     if padding_size and windows.shape[1] < padding_size:
         padding_width = padding_size - windows.shape[1]
         windows = np.pad(windows, ((0, 0), (0, padding_width), (0, 0)), mode='constant')
     
     return windows
-
 
 def normalize_signals(X, mean=None, std=None):
     '''
@@ -80,12 +73,26 @@ def normalize_signals(X, mean=None, std=None):
         std = X.std(axis=(0, 1), keepdims=True) + 1e-8
     return (X - mean) / std, mean, std
 
-def create_dataloaders_oppo(data_dir, batch_size=32, validation_split=0.2, normalize=False):
+def generate_client_ratios(num_clients):
+    if num_clients is None or num_clients <= 1:
+        return [1.0]
+    return np.random.dirichlet(np.ones(num_clients) * 0.3)
+
+def create_dataloaders_oppo(data_dir, batch_size=32, validation_split=0.2, normalize=False, client_id=None, num_clients=None):
     '''
     创建 OPPORTUNITY 数据集的 DataLoader
     '''
-    # 定义验证集文件名
-    VALIDATION_FILES = {'S2-ADL4.dat', 'S2-ADL5.dat', 'S3-ADL4.dat', 'S3-ADL5.dat'}
+    # 检查联邦学习环境并引入异质性
+    if client_id is not None and num_clients is not None:
+        window_sizes = [80, 90, 100]
+        overlap_rates = [0.5, 0.25, 0.75]
+        chosen_window_size = np.random.choice(window_sizes)
+        chosen_overlap_rate = np.random.choice(overlap_rates)
+        ratios = generate_client_ratios(num_clients)
+    else:
+        chosen_window_size = WINDOW_SIZE
+        chosen_overlap_rate = OVERLAP_RATE
+        ratios = [1.0]
 
     # 加载数据
     all_files_data = load_oppo_data(data_dir)
@@ -94,42 +101,19 @@ def create_dataloaders_oppo(data_dir, batch_size=32, validation_split=0.2, norma
 
     # 标签转换（17 分类不含 null 类）
     label_seq = {
-        406516: 0,  # Open Door 1
-        406517: 1,  # Open Door 2
-        404516: 2,  # Close Door 1
-        404517: 3,  # Close Door 2
-        406520: 4,  # Open Fridge
-        404520: 5,  # Close Fridge
-        406505: 6,  # Open Dishwasher
-        404505: 7,  # Close Dishwasher
-        406519: 8,  # Open Drawer 1
-        404519: 9,  # Close Drawer 1
-        406511: 10, # Open Drawer 2
-        404511: 11, # Close Drawer 2
-        406508: 12, # Open Drawer 3
-        404508: 13, # Close Drawer 3
-        408512: 14, # Clean Table
-        407521: 15, # Drink from Cup
-        405506: 16  # Toggle Switch
+        406516: 0, 406517: 1, 404516: 2, 404517: 3, 406520: 4,
+        404520: 5, 406505: 6, 404505: 7, 406519: 8, 404519: 9,
+        406511: 10, 404511: 11, 406508: 12, 404508: 13, 408512: 14,
+        407521: 15, 405506: 16
     }
+    
     for file, data, label in all_files_data:
-        # 滑窗
-        # 调用时，传入 padding_size 参数，确保时间步长不小于 2
-        windows = sliding_window(array=data, windowsize=WINDOW_SIZE, overlaprate=OVERLAP_RATE, padding_size=3)
-        labels = sliding_window(array=label.reshape(-1, 1), windowsize=WINDOW_SIZE, overlaprate=OVERLAP_RATE)
-        labels = labels[:, 0]  # 假设每个窗口的标签取第一个
+        windows = sliding_window(array=data, windowsize=chosen_window_size, overlaprate=chosen_overlap_rate, padding_size=3)
+        labels = sliding_window(array=label.reshape(-1, 1), windowsize=chosen_window_size, overlaprate=chosen_overlap_rate)
+        labels = labels[:, 0]  # 取每个窗口的第一个标签
 
-        # 映射标签
-        mapped_labels = []
-        for lbl in labels:
-            lbl = lbl[0]  # 将 NumPy 数组转换为标量值
-            if lbl in label_seq:
-                mapped_labels.append(label_seq[lbl])
-            else:
-                # 如果标签不在 label_seq 中，则跳过
-                continue
+        mapped_labels = [label_seq[lbl[0]] for lbl in labels if lbl[0] in label_seq]
 
-        # 过滤掉未映射的标签
         valid_indices = [i for i, lbl in enumerate(labels) if lbl[0] in label_seq]
         windows = windows[valid_indices]
         labels = np.array(mapped_labels)
@@ -162,16 +146,10 @@ def create_dataloaders_oppo(data_dir, batch_size=32, validation_split=0.2, norma
     print(f'ytest shape: {ytest.shape}')
 
     # 转换为 PyTorch 张量
-    train_segments_tensor = torch.tensor(xtrain, dtype=torch.float32)
+    train_segments_tensor = torch.tensor(xtrain, dtype=torch.float32).permute(0, 2, 1)
     train_labels_tensor = torch.tensor(ytrain, dtype=torch.long)
-    test_segments_tensor = torch.tensor(xtest, dtype=torch.float32)
+    test_segments_tensor = torch.tensor(xtest, dtype=torch.float32).permute(0, 2, 1)
     test_labels_tensor = torch.tensor(ytest, dtype=torch.long)
-
-    # 确保数据的形状为 [samples, channels, sequence_length]
-    # OPPORTUNITY 数据集：windowsize=30, channels=113
-    # 当前 windows 的形状为 [samples, 30, 113], 需要转置为 [samples, 113, 30]
-    train_segments_tensor = train_segments_tensor.permute(0, 2, 1)
-    test_segments_tensor = test_segments_tensor.permute(0, 2, 1)
 
     # 创建 TensorDataset
     train_dataset = TensorDataset(train_segments_tensor, train_labels_tensor)
@@ -187,4 +165,4 @@ def create_dataloaders_oppo(data_dir, batch_size=32, validation_split=0.2, norma
     val_loader = DataLoader(val_subset, batch_size=batch_size, shuffle=False)
     test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
 
-    return train_loader, val_loader, test_loader
+    return train_loader, val_loader, test_loader, chosen_window_size, 113, len(label_seq)

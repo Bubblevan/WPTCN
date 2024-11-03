@@ -1,3 +1,5 @@
+# utils/ucihad_proc.py
+
 import os
 import numpy as np
 import scipy.io as scio
@@ -29,12 +31,29 @@ def normalize_signals(X, xtest, mean=None, std=None):
     xtest_norm = (xtest - mean) / std
     return X_norm, xtest_norm, mean, std
 
-def create_dataloaders_uschad(data_dir, batch_size=32, validation_split=0.2, normalize=False):
+def generate_client_ratios(num_clients):
+    if num_clients is None or num_clients <= 1:
+        return [1.0]
+    return np.random.dirichlet(np.ones(num_clients) * 0.3)
+
+def create_dataloaders_uschad(data_dir, batch_size=32, validation_split=0.2, normalize=False, client_id=None, num_clients=None):
     '''
     创建 USC-HAD 数据集的 DataLoader，并根据第一个 .mat 文件动态确定通道数
     '''
+    # 检查是否处于联邦学习环境中
+    if client_id is not None and num_clients is not None:
+        window_sizes = [80, 100, 120]
+        overlap_rates = [0.1, 0.25, 0.5]
+        chosen_window_size = np.random.choice(window_sizes)
+        chosen_overlap_rate = np.random.choice(overlap_rates)
+        ratios = generate_client_ratios(num_clients)
+    else:
+        chosen_window_size = 100
+        chosen_overlap_rate = 0.1
+        ratios = [1.0]
+
     # 定义验证集受试者
-    VALIDATION_SUBJECTS = {1, 2, 3, 4}  # 根据需要调整
+    VALIDATION_SUBJECTS = {1, 2, 3, 4}
     label_seq = {i: i - 1 for i in range(1, 13)}  # 12个活动
     xtrain, xtest, ytrain, ytest = [], [], [], []
     channels = None  # 用于存储动态确定的通道数
@@ -52,7 +71,7 @@ def create_dataloaders_uschad(data_dir, batch_size=32, validation_split=0.2, nor
             print(f"Skipping invalid folder: {subject}")
             continue
 
-        print(f'Processing Subject {subject_id}', end='')
+        print(f'Processing Subject {subject_id}', end=' ')
         if subject_id in VALIDATION_SUBJECTS:
             print('   ----   Validation Data')
         else:
@@ -65,12 +84,12 @@ def create_dataloaders_uschad(data_dir, batch_size=32, validation_split=0.2, nor
                 continue
 
             try:
-                label_str = ''.join(filter(str.isdigit, mat.split('t')[0]))  # 提取活动标签 'a1' -> '1'
+                label_str = ''.join(filter(str.isdigit, mat.split('t')[0]))
                 label_id = int(label_str)
                 if label_id not in label_seq:
                     print(f" - Skipping unknown label in file: {mat}")
                     continue
-                mapped_label = label_seq[label_id]  # 映射到 0-11 的标签
+                mapped_label = label_seq[label_id]
             except:
                 print(f" - Skipping file with invalid label: {mat}")
                 continue
@@ -83,10 +102,10 @@ def create_dataloaders_uschad(data_dir, batch_size=32, validation_split=0.2, nor
 
             # 动态确定通道数
             if channels is None:
-                channels = content.shape[1]  # 确定传感器数据的通道数
+                channels = content.shape[1]
 
             # 滑窗切分
-            windows = sliding_window(content, windowsize=100, overlaprate=0.1)
+            windows = sliding_window(content, windowsize=chosen_window_size, overlaprate=chosen_overlap_rate)
 
             # 分配到训练集或验证集
             if subject_id in VALIDATION_SUBJECTS:
@@ -112,10 +131,10 @@ def create_dataloaders_uschad(data_dir, batch_size=32, validation_split=0.2, nor
     print(f'ytrain shape: {ytrain.shape}')
     print(f'ytest shape: {ytest.shape}')
 
-    train_segments_tensor = torch.tensor(xtrain, dtype=torch.float32) if len(xtrain) > 0 else torch.empty((0, channels, 100), dtype=torch.float32)
+    train_segments_tensor = torch.tensor(xtrain, dtype=torch.float32) if len(xtrain) > 0 else torch.empty((0, channels, chosen_window_size), dtype=torch.float32)
     train_labels_tensor = torch.tensor(ytrain, dtype=torch.long) if len(ytrain) > 0 else torch.empty((0,), dtype=torch.long)
 
-    test_segments_tensor = torch.tensor(xtest, dtype=torch.float32) if len(xtest) > 0 else torch.empty((0, channels, 100), dtype=torch.float32)
+    test_segments_tensor = torch.tensor(xtest, dtype=torch.float32) if len(xtest) > 0 else torch.empty((0, channels, chosen_window_size), dtype=torch.float32)
     test_labels_tensor = torch.tensor(ytest, dtype=torch.long) if len(ytest) > 0 else torch.empty((0,), dtype=torch.long)
 
     if len(xtrain) > 0:
