@@ -1,0 +1,311 @@
+{
+  "baseline_type": "HFL",
+  "round_metrics": [
+    {
+      "round": 1,
+      "aggregated_metrics": {
+        "mean_train_loss": 0.0,
+        "max_train_loss": 0.0,
+        "mean_train_accuracy": 0.0,
+        "max_train_accuracy": 0.0,
+        "mean_training_time": 7.6186747550964355,
+        "max_training_time": 9.220777988433838,
+        "mean_cpu_usage_mean": 3.6916666666666664,
+        "max_cpu_usage_mean": 3.75,
+        "mean_memory_usage_max": 57.8,
+        "max_memory_usage_max": 57.8,
+        "mean_bandwidth_usage_mean": 0.006130695343017578,
+        "max_bandwidth_usage_mean": 0.006289482116699219
+      },
+      "client_metrics": {
+        "0bb1dad996e74376a374cf434b9fe448": {
+          "memory_usage_max": 57.8,
+          "gpu_memory_max": 4.02783203125,
+          "cpu_usage_mean": 3.6333333333333333,
+          "bandwidth_usage_mean": 0.0059719085693359375,
+          "training_time": 6.016571521759033,
+          "train_loss": 0.0,
+          "communication_size_total": 916.34765625,
+          "train_accuracy": 0.0
+        },
+        "aa532d2ac095472996c23efb6d760719": {
+          "memory_usage_max": 57.8,
+          "gpu_memory_max": 2.68994140625,
+          "cpu_usage_mean": 3.75,
+          "bandwidth_usage_mean": 0.006289482116699219,
+          "training_time": 9.220777988433838,
+          "train_loss": 0.0,
+          "communication_size_total": 921.8359375,
+          "train_accuracy": 0.0
+        }
+      }
+    },
+    {
+      "round": 2,
+      "aggregated_metrics": {
+        "mean_train_loss": 0.0,
+        "max_train_loss": 0.0,
+        "mean_train_accuracy": 0.0,
+        "max_train_accuracy": 0.0,
+        "mean_training_time": 7.250264247258504,
+        "max_training_time": 9.432793140411377,
+        "mean_cpu_usage_mean": 3.470158730158731,
+        "max_cpu_usage_mean": 3.62,
+        "mean_memory_usage_max": 57.63333333333333,
+        "max_memory_usage_max": 57.7,
+        "mean_bandwidth_usage_mean": 0.0020391827537899927,
+        "max_bandwidth_usage_mean": 0.0022058486938476562
+      },
+      "client_metrics": {
+        "0fe59456bd374955b79742bce5890ceb": {
+          "memory_usage_max": 57.6,
+          "gpu_memory_max": 4.02783203125,
+          "cpu_usage_mean": 3.5571428571428574,
+          "bandwidth_usage_mean": 0.0021884100777762277,
+          "training_time": 6.247005462646484,
+          "train_loss": 0.0,
+          "communication_size_total": 916.34765625,
+          "train_accuracy": 0.0
+        },
+        "0bb1dad996e74376a374cf434b9fe448": {
+          "memory_usage_max": 57.6,
+          "gpu_memory_max": 4.02783203125,
+          "cpu_usage_mean": 3.233333333333334,
+          "bandwidth_usage_mean": 0.0017232894897460938,
+          "training_time": 6.070994138717651,
+          "train_loss": 0.0,
+          "communication_size_total": 1832.6953125,
+          "train_accuracy": 0.0
+        },
+        "aa532d2ac095472996c23efb6d760719": {
+          "memory_usage_max": 57.7,
+          "gpu_memory_max": 2.68994140625,
+          "cpu_usage_mean": 3.62,
+          "bandwidth_usage_mean": 0.0022058486938476562,
+          "training_time": 9.432793140411377,
+          "train_loss": 0.0,
+          "communication_size_total": 1843.671875,
+          "train_accuracy": 0.0
+        }
+      }
+    },
+    {
+      "round": 3,
+      "aggregated_metrics": {
+        "mean_train_loss": 0.0,
+        "max_train_loss": 0.0,
+        "mean_train_accuracy": 0.0,
+        "max_train_accuracy": 0.0,
+        "mean_training_time": 7.1405378977457685,
+        "max_training_time": 9.363508701324463,
+        "mean_cpu_usage_mean": 3.755555555555556,
+        "max_cpu_usage_mean": 3.816666666666667,
+        "mean_memory_usage_max": 57.833333333333336,
+        "max_memory_usage_max": 57.9,
+        "mean_bandwidth_usage_mean": 0.005828899807400173,
+        "max_bandwidth_usage_mean": 0.011871147155761718
+      },
+      "client_metrics": {
+        "0bb1dad996e74376a374cf434b9fe448": {
+          "memory_usage_max": 57.8,
+          "gpu_memory_max": 4.0283203125,
+          "cpu_usage_mean": 3.816666666666667,
+          "bandwidth_usage_mean": 0.002807776133219401,
+          "training_time": 6.041244268417358,
+          "train_loss": 0.0,
+          "communication_size_total": 2749.04296875,
+          "train_accuracy": 0.0
+        },
+        "aa532d2ac095472996c23efb6d760719": {
+          "memory_usage_max": 57.9,
+          "gpu_memory_max": 2.68994140625,
+          "cpu_usage_mean": 3.65,
+          "bandwidth_usage_mean": 0.011871147155761718,
+          "training_time": 9.363508701324463,
+          "train_loss": 0.0,
+          "communication_size_total": 2765.5078125,
+          "train_accuracy": 0.0
+        },
+        "0fe59456bd374955b79742bce5890ceb": {
+          "memory_usage_max": 57.8,
+          "gpu_memory_max": 4.02783203125,
+          "cpu_usage_mean": 3.8000000000000003,
+          "bandwidth_usage_mean": 0.002807776133219401,
+          "training_time": 6.016860723495483,
+          "train_loss": 0.0,
+          "communication_size_total": 1832.6953125,
+          "train_accuracy": 0.0
+        }
+      }
+    },
+    {
+      "round": 4,
+      "aggregated_metrics": {
+        "mean_train_loss": 0.0,
+        "max_train_loss": 0.0,
+        "mean_train_accuracy": 0.0,
+        "max_train_accuracy": 0.0,
+        "mean_training_time": 7.535674810409546,
+        "max_training_time": 9.6286039352417,
+        "mean_cpu_usage_mean": 4.231904761904762,
+        "max_cpu_usage_mean": 4.314285714285714,
+        "mean_memory_usage_max": 58.1,
+        "max_memory_usage_max": 58.1,
+        "mean_bandwidth_usage_mean": 0.003330848330543155,
+        "max_bandwidth_usage_mean": 0.005034255981445313
+      },
+      "client_metrics": {
+        "0bb1dad996e74376a374cf434b9fe448": {
+          "memory_usage_max": 58.1,
+          "gpu_memory_max": 4.02783203125,
+          "cpu_usage_mean": 4.271428571428571,
+          "bandwidth_usage_mean": 0.003723417009626116,
+          "training_time": 6.283923387527466,
+          "train_loss": 0.0,
+          "communication_size_total": 3665.390625,
+          "train_accuracy": 0.0
+        },
+        "543d7004aaca4c4eb6a766871cdee169": {
+          "memory_usage_max": 58.1,
+          "gpu_memory_max": 4.02783203125,
+          "cpu_usage_mean": 4.314285714285714,
+          "bandwidth_usage_mean": 0.0012348720005580357,
+          "training_time": 6.694497108459473,
+          "train_loss": 0.0,
+          "communication_size_total": 916.34765625,
+          "train_accuracy": 0.0
+        },
+        "aa532d2ac095472996c23efb6d760719": {
+          "memory_usage_max": 58.1,
+          "gpu_memory_max": 2.68994140625,
+          "cpu_usage_mean": 4.11,
+          "bandwidth_usage_mean": 0.005034255981445313,
+          "training_time": 9.6286039352417,
+          "train_loss": 0.0,
+          "communication_size_total": 3687.34375,
+          "train_accuracy": 0.0
+        }
+      }
+    }
+  ],
+  "client_metrics": {
+    "0bb1dad996e74376a374cf434b9fe448": [
+      {
+        "memory_usage_max": 57.8,
+        "gpu_memory_max": 4.02783203125,
+        "cpu_usage_mean": 3.6333333333333333,
+        "bandwidth_usage_mean": 0.0059719085693359375,
+        "training_time": 6.016571521759033,
+        "train_loss": 0.0,
+        "communication_size_total": 916.34765625,
+        "train_accuracy": 0.0
+      },
+      {
+        "memory_usage_max": 57.6,
+        "gpu_memory_max": 4.02783203125,
+        "cpu_usage_mean": 3.233333333333334,
+        "bandwidth_usage_mean": 0.0017232894897460938,
+        "training_time": 6.070994138717651,
+        "train_loss": 0.0,
+        "communication_size_total": 1832.6953125,
+        "train_accuracy": 0.0
+      },
+      {
+        "memory_usage_max": 57.8,
+        "gpu_memory_max": 4.0283203125,
+        "cpu_usage_mean": 3.816666666666667,
+        "bandwidth_usage_mean": 0.002807776133219401,
+        "training_time": 6.041244268417358,
+        "train_loss": 0.0,
+        "communication_size_total": 2749.04296875,
+        "train_accuracy": 0.0
+      },
+      {
+        "memory_usage_max": 58.1,
+        "gpu_memory_max": 4.02783203125,
+        "cpu_usage_mean": 4.271428571428571,
+        "bandwidth_usage_mean": 0.003723417009626116,
+        "training_time": 6.283923387527466,
+        "train_loss": 0.0,
+        "communication_size_total": 3665.390625,
+        "train_accuracy": 0.0
+      }
+    ],
+    "aa532d2ac095472996c23efb6d760719": [
+      {
+        "memory_usage_max": 57.8,
+        "gpu_memory_max": 2.68994140625,
+        "cpu_usage_mean": 3.75,
+        "bandwidth_usage_mean": 0.006289482116699219,
+        "training_time": 9.220777988433838,
+        "train_loss": 0.0,
+        "communication_size_total": 921.8359375,
+        "train_accuracy": 0.0
+      },
+      {
+        "memory_usage_max": 57.7,
+        "gpu_memory_max": 2.68994140625,
+        "cpu_usage_mean": 3.62,
+        "bandwidth_usage_mean": 0.0022058486938476562,
+        "training_time": 9.432793140411377,
+        "train_loss": 0.0,
+        "communication_size_total": 1843.671875,
+        "train_accuracy": 0.0
+      },
+      {
+        "memory_usage_max": 57.9,
+        "gpu_memory_max": 2.68994140625,
+        "cpu_usage_mean": 3.65,
+        "bandwidth_usage_mean": 0.011871147155761718,
+        "training_time": 9.363508701324463,
+        "train_loss": 0.0,
+        "communication_size_total": 2765.5078125,
+        "train_accuracy": 0.0
+      },
+      {
+        "memory_usage_max": 58.1,
+        "gpu_memory_max": 2.68994140625,
+        "cpu_usage_mean": 4.11,
+        "bandwidth_usage_mean": 0.005034255981445313,
+        "training_time": 9.6286039352417,
+        "train_loss": 0.0,
+        "communication_size_total": 3687.34375,
+        "train_accuracy": 0.0
+      }
+    ],
+    "0fe59456bd374955b79742bce5890ceb": [
+      {
+        "memory_usage_max": 57.6,
+        "gpu_memory_max": 4.02783203125,
+        "cpu_usage_mean": 3.5571428571428574,
+        "bandwidth_usage_mean": 0.0021884100777762277,
+        "training_time": 6.247005462646484,
+        "train_loss": 0.0,
+        "communication_size_total": 916.34765625,
+        "train_accuracy": 0.0
+      },
+      {
+        "memory_usage_max": 57.8,
+        "gpu_memory_max": 4.02783203125,
+        "cpu_usage_mean": 3.8000000000000003,
+        "bandwidth_usage_mean": 0.002807776133219401,
+        "training_time": 6.016860723495483,
+        "train_loss": 0.0,
+        "communication_size_total": 1832.6953125,
+        "train_accuracy": 0.0
+      }
+    ],
+    "543d7004aaca4c4eb6a766871cdee169": [
+      {
+        "memory_usage_max": 58.1,
+        "gpu_memory_max": 4.02783203125,
+        "cpu_usage_mean": 4.314285714285714,
+        "bandwidth_usage_mean": 0.0012348720005580357,
+        "training_time": 6.694497108459473,
+        "train_loss": 0.0,
+        "communication_size_total": 916.34765625,
+        "train_accuracy": 0.0
+      }
+    ]
+  }
+}

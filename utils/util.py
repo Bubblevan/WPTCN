@@ -28,7 +28,7 @@ def load_dataset(dataset, batch_size, validation_split, client_id=None, num_clie
     if dataset == 'UCI-HAR':
         from data_proc.ucihar_proc import create_dataloaders_ucihar
         train_loader, val_loader, test_loader, input_length, num_input_channels, num_classes = create_dataloaders_ucihar(
-            data_dir='../../data/UCI-HAR-Dataset',
+            data_dir='../data/UCI-HAR-Dataset',
             batch_size=batch_size,
             normalize=True,
             validation_split=validation_split,
@@ -38,7 +38,7 @@ def load_dataset(dataset, batch_size, validation_split, client_id=None, num_clie
     elif dataset == 'WISDM':
         from data_proc.wisdm_proc import create_dataloaders_wisdm
         train_loader, val_loader, test_loader, input_length, num_input_channels, num_classes = create_dataloaders_wisdm(
-            data_dir='../../data/WISDM_ar_v1.1',
+            data_dir='../data/WISDM_ar_v1.1',
             batch_size=batch_size,
             validation_split=validation_split,
             normalize=True,
@@ -51,7 +51,7 @@ def load_dataset(dataset, batch_size, validation_split, client_id=None, num_clie
     elif dataset == 'PAMAP2':
         from data_proc.pamap_proc import create_dataloaders_pamap2
         train_loader, val_loader, test_loader, input_length, num_input_channels, num_classes = create_dataloaders_pamap2(
-            data_dir='../../data/PAMAP2_Dataset/Protocol',
+            data_dir='../data/PAMAP2_Dataset/Protocol',
             batch_size=batch_size,
             validation_split=validation_split,
             normalize=True,
@@ -64,7 +64,7 @@ def load_dataset(dataset, batch_size, validation_split, client_id=None, num_clie
     elif dataset == 'OPPORTUNITY':
         from data_proc.oppo_proc import create_dataloaders_oppo
         train_loader, val_loader, test_loader, input_length, num_input_channels, num_classes = create_dataloaders_oppo(
-            data_dir='../../data/OpportunityUCIDataset/dataset',
+            data_dir='../data/OpportunityUCIDataset/dataset',
             batch_size=batch_size,
             validation_split=validation_split,
             normalize=True,
@@ -77,7 +77,7 @@ def load_dataset(dataset, batch_size, validation_split, client_id=None, num_clie
     elif dataset == 'USC-HAD':
         from data_proc.uschad_proc import create_dataloaders_uschad
         train_loader, val_loader, test_loader, num_input_channels = create_dataloaders_uschad(
-            data_dir='../../data/USC-HAD',
+            data_dir='../data/USC-HAD',
             batch_size=batch_size,
             validation_split=validation_split,
             normalize=True,
@@ -89,7 +89,7 @@ def load_dataset(dataset, batch_size, validation_split, client_id=None, num_clie
     elif dataset == 'DASA':
         from data_proc.dasa_proc import create_dataloaders_dasa
         train_loader, val_loader, test_loader, input_length, num_input_channels, num_classes = create_dataloaders_dasa(
-            data_dir='../../data/Daily_and_Sports_Activities/data',
+            data_dir='../data/Daily_and_Sports_Activities/data',
             batch_size=batch_size,
             validation_split=validation_split,
             window_size=125,

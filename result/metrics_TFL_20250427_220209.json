@@ -1,0 +1,252 @@
+{
+  "baseline_type": "TFL",
+  "round_metrics": [
+    {
+      "round": 1,
+      "aggregated_metrics": {
+        "mean_train_loss": 1.577974090371992,
+        "max_train_loss": 1.5809218389027462,
+        "mean_train_accuracy": 0.4642569600406797,
+        "max_train_accuracy": 0.46472308148650365,
+        "mean_training_time": 9.145374417304993,
+        "max_training_time": 9.184111595153809,
+        "mean_cpu_usage_mean": 6.633333333333333,
+        "max_cpu_usage_mean": 6.666666666666667,
+        "mean_memory_usage_max": 57.9,
+        "max_memory_usage_max": 57.9,
+        "mean_bandwidth_usage_mean": 0.0025117291344536677,
+        "max_bandwidth_usage_mean": 0.0026719093322753905
+      },
+      "client_metrics": {
+        "4a49ec112c58486db8a6cc5444b1ccc5": {
+          "memory_usage_max": 57.9,
+          "gpu_memory_max": 24.958984375,
+          "cpu_usage_mean": 6.666666666666667,
+          "bandwidth_usage_mean": 0.0023515489366319445,
+          "training_time": 9.106637239456177,
+          "train_loss": 1.575026341841238,
+          "train_accuracy": 0.46472308148650365
+        },
+        "1e17a4a5126a4918a870b46b555ad092": {
+          "memory_usage_max": 57.9,
+          "gpu_memory_max": 24.90673828125,
+          "cpu_usage_mean": 6.6,
+          "bandwidth_usage_mean": 0.0026719093322753905,
+          "training_time": 9.184111595153809,
+          "train_loss": 1.5809218389027462,
+          "train_accuracy": 0.4637908385948557
+        }
+      }
+    },
+    {
+      "round": 2,
+      "aggregated_metrics": {
+        "mean_train_loss": 0.986171513783697,
+        "max_train_loss": 1.0133631998610964,
+        "mean_train_accuracy": 0.6498571125160044,
+        "max_train_accuracy": 0.6708700017718977,
+        "mean_training_time": 16.275778770446777,
+        "max_training_time": 17.85763168334961,
+        "mean_cpu_usage_mean": 8.920416666666668,
+        "max_cpu_usage_mean": 9.173333333333336,
+        "mean_memory_usage_max": 58.8,
+        "max_memory_usage_max": 58.8,
+        "mean_bandwidth_usage_mean": 0.006042265229754978,
+        "max_bandwidth_usage_mean": 0.006650659773084853
+      },
+      "client_metrics": {
+        "8ae0235233eb4a028f0c6bd94f3b35e9": {
+          "memory_usage_max": 58.8,
+          "gpu_memory_max": 27.0244140625,
+          "cpu_usage_mean": 8.483333333333333,
+          "bandwidth_usage_mean": 0.006650659773084853,
+          "training_time": 17.85763168334961,
+          "train_loss": 0.9345649695109155,
+          "train_accuracy": 0.6708700017718977
+        },
+        "4a49ec112c58486db8a6cc5444b1ccc5": {
+          "memory_usage_max": 58.8,
+          "gpu_memory_max": 24.74609375,
+          "cpu_usage_mean": 9.025,
+          "bandwidth_usage_mean": 0.005804717540740967,
+          "training_time": 16.20158076286316,
+          "train_loss": 1.0047992497986922,
+          "train_accuracy": 0.6405356159159287
+        },
+        "1e17a4a5126a4918a870b46b555ad092": {
+          "memory_usage_max": 58.8,
+          "gpu_memory_max": 24.98046875,
+          "cpu_usage_mean": 9.0,
+          "bandwidth_usage_mean": 0.005804717540740967,
+          "training_time": 16.226801872253418,
+          "train_loss": 1.0133631998610964,
+          "train_accuracy": 0.638332132717488
+        },
+        "265324cbd0ee4662b5582ed0e73cbf1b": {
+          "memory_usage_max": 58.8,
+          "gpu_memory_max": 28.955078125,
+          "cpu_usage_mean": 9.173333333333336,
+          "bandwidth_usage_mean": 0.005908966064453125,
+          "training_time": 14.817100763320923,
+          "train_loss": 0.9919586359640844,
+          "train_accuracy": 0.6496906996587031
+        }
+      }
+    },
+    {
+      "round": 3,
+      "aggregated_metrics": {
+        "mean_train_loss": 0.838845934890322,
+        "max_train_loss": 0.863907224498334,
+        "mean_train_accuracy": 0.6999733203188949,
+        "max_train_accuracy": 0.7157285452719863,
+        "mean_training_time": 16.439411282539368,
+        "max_training_time": 18.89060401916504,
+        "mean_cpu_usage_mean": 8.77310855263158,
+        "max_cpu_usage_mean": 9.0,
+        "mean_memory_usage_max": 58.8,
+        "max_memory_usage_max": 58.8,
+        "mean_bandwidth_usage_mean": 0.011400643147920306,
+        "max_bandwidth_usage_mean": 0.011587142944335938
+      },
+      "client_metrics": {
+        "1e17a4a5126a4918a870b46b555ad092": {
+          "memory_usage_max": 58.8,
+          "gpu_memory_max": 24.9296875,
+          "cpu_usage_mean": 8.90625,
+          "bandwidth_usage_mean": 0.011316537857055664,
+          "training_time": 16.430617809295654,
+          "train_loss": 0.8588140016743943,
+          "train_accuracy": 0.6914276028645282
+        },
+        "265324cbd0ee4662b5582ed0e73cbf1b": {
+          "memory_usage_max": 58.8,
+          "gpu_memory_max": 28.955078125,
+          "cpu_usage_mean": 9.0,
+          "bandwidth_usage_mean": 0.011587142944335938,
+          "training_time": 14.04032278060913,
+          "train_loss": 0.8294705474437707,
+          "train_accuracy": 0.7025383959044369
+        },
+        "4a49ec112c58486db8a6cc5444b1ccc5": {
+          "memory_usage_max": 58.8,
+          "gpu_memory_max": 24.9296875,
+          "cpu_usage_mean": 8.912500000000001,
+          "bandwidth_usage_mean": 0.011316537857055664,
+          "training_time": 16.396100521087646,
+          "train_loss": 0.863907224498334,
+          "train_accuracy": 0.6901987372346285
+        },
+        "8ae0235233eb4a028f0c6bd94f3b35e9": {
+          "memory_usage_max": 58.8,
+          "gpu_memory_max": 26.9716796875,
+          "cpu_usage_mean": 8.273684210526318,
+          "bandwidth_usage_mean": 0.011382353933233964,
+          "training_time": 18.89060401916504,
+          "train_loss": 0.8031919659447891,
+          "train_accuracy": 0.7157285452719863
+        }
+      }
+    }
+  ],
+  "client_metrics": {
+    "4a49ec112c58486db8a6cc5444b1ccc5": [
+      {
+        "memory_usage_max": 57.9,
+        "gpu_memory_max": 24.958984375,
+        "cpu_usage_mean": 6.666666666666667,
+        "bandwidth_usage_mean": 0.0023515489366319445,
+        "training_time": 9.106637239456177,
+        "train_loss": 1.575026341841238,
+        "train_accuracy": 0.46472308148650365
+      },
+      {
+        "memory_usage_max": 58.8,
+        "gpu_memory_max": 24.74609375,
+        "cpu_usage_mean": 9.025,
+        "bandwidth_usage_mean": 0.005804717540740967,
+        "training_time": 16.20158076286316,
+        "train_loss": 1.0047992497986922,
+        "train_accuracy": 0.6405356159159287
+      },
+      {
+        "memory_usage_max": 58.8,
+        "gpu_memory_max": 24.9296875,
+        "cpu_usage_mean": 8.912500000000001,
+        "bandwidth_usage_mean": 0.011316537857055664,
+        "training_time": 16.396100521087646,
+        "train_loss": 0.863907224498334,
+        "train_accuracy": 0.6901987372346285
+      }
+    ],
+    "1e17a4a5126a4918a870b46b555ad092": [
+      {
+        "memory_usage_max": 57.9,
+        "gpu_memory_max": 24.90673828125,
+        "cpu_usage_mean": 6.6,
+        "bandwidth_usage_mean": 0.0026719093322753905,
+        "training_time": 9.184111595153809,
+        "train_loss": 1.5809218389027462,
+        "train_accuracy": 0.4637908385948557
+      },
+      {
+        "memory_usage_max": 58.8,
+        "gpu_memory_max": 24.98046875,
+        "cpu_usage_mean": 9.0,
+        "bandwidth_usage_mean": 0.005804717540740967,
+        "training_time": 16.226801872253418,
+        "train_loss": 1.0133631998610964,
+        "train_accuracy": 0.638332132717488
+      },
+      {
+        "memory_usage_max": 58.8,
+        "gpu_memory_max": 24.9296875,
+        "cpu_usage_mean": 8.90625,
+        "bandwidth_usage_mean": 0.011316537857055664,
+        "training_time": 16.430617809295654,
+        "train_loss": 0.8588140016743943,
+        "train_accuracy": 0.6914276028645282
+      }
+    ],
+    "8ae0235233eb4a028f0c6bd94f3b35e9": [
+      {
+        "memory_usage_max": 58.8,
+        "gpu_memory_max": 27.0244140625,
+        "cpu_usage_mean": 8.483333333333333,
+        "bandwidth_usage_mean": 0.006650659773084853,
+        "training_time": 17.85763168334961,
+        "train_loss": 0.9345649695109155,
+        "train_accuracy": 0.6708700017718977
+      },
+      {
+        "memory_usage_max": 58.8,
+        "gpu_memory_max": 26.9716796875,
+        "cpu_usage_mean": 8.273684210526318,
+        "bandwidth_usage_mean": 0.011382353933233964,
+        "training_time": 18.89060401916504,
+        "train_loss": 0.8031919659447891,
+        "train_accuracy": 0.7157285452719863
+      }
+    ],
+    "265324cbd0ee4662b5582ed0e73cbf1b": [
+      {
+        "memory_usage_max": 58.8,
+        "gpu_memory_max": 28.955078125,
+        "cpu_usage_mean": 9.173333333333336,
+        "bandwidth_usage_mean": 0.005908966064453125,
+        "training_time": 14.817100763320923,
+        "train_loss": 0.9919586359640844,
+        "train_accuracy": 0.6496906996587031
+      },
+      {
+        "memory_usage_max": 58.8,
+        "gpu_memory_max": 28.955078125,
+        "cpu_usage_mean": 9.0,
+        "bandwidth_usage_mean": 0.011587142944335938,
+        "training_time": 14.04032278060913,
+        "train_loss": 0.8294705474437707,
+        "train_accuracy": 0.7025383959044369
+      }
+    ]
+  }
+}

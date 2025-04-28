@@ -1,0 +1,66 @@
+{
+  "baseline_type": "TFL",
+  "round_metrics": [
+    {
+      "round": 1,
+      "aggregated_metrics": {
+        "mean_train_loss": 1.381880541072499,
+        "max_train_loss": 1.4307104085552718,
+        "mean_train_accuracy": 0.546483344414158,
+        "max_train_accuracy": 0.5568458578941795,
+        "mean_training_time": 8.690642237663269,
+        "max_training_time": 9.338505506515503,
+        "mean_cpu_usage_mean": 6.525,
+        "max_cpu_usage_mean": 6.800000000000001,
+        "mean_memory_usage_max": 58.55,
+        "max_memory_usage_max": 58.6,
+        "mean_bandwidth_usage_mean": 0.0053554892539978026,
+        "max_bandwidth_usage_mean": 0.005550265312194824
+      },
+      "client_metrics": {
+        "6c5962e51b854d7cb972712fe5bd2d81": {
+          "memory_usage_max": 58.6,
+          "gpu_memory_max": 24.958984375,
+          "cpu_usage_mean": 6.249999999999999,
+          "bandwidth_usage_mean": 0.005160713195800781,
+          "training_time": 9.338505506515503,
+          "train_loss": 1.3330506735897263,
+          "train_accuracy": 0.5568458578941795
+        },
+        "65a5d192b9db43c5ac1cab008a9251c8": {
+          "memory_usage_max": 58.5,
+          "gpu_memory_max": 26.8984375,
+          "cpu_usage_mean": 6.800000000000001,
+          "bandwidth_usage_mean": 0.005550265312194824,
+          "training_time": 8.042778968811035,
+          "train_loss": 1.4307104085552718,
+          "train_accuracy": 0.5361208309341365
+        }
+      }
+    }
+  ],
+  "client_metrics": {
+    "6c5962e51b854d7cb972712fe5bd2d81": [
+      {
+        "memory_usage_max": 58.6,
+        "gpu_memory_max": 24.958984375,
+        "cpu_usage_mean": 6.249999999999999,
+        "bandwidth_usage_mean": 0.005160713195800781,
+        "training_time": 9.338505506515503,
+        "train_loss": 1.3330506735897263,
+        "train_accuracy": 0.5568458578941795
+      }
+    ],
+    "65a5d192b9db43c5ac1cab008a9251c8": [
+      {
+        "memory_usage_max": 58.5,
+        "gpu_memory_max": 26.8984375,
+        "cpu_usage_mean": 6.800000000000001,
+        "bandwidth_usage_mean": 0.005550265312194824,
+        "training_time": 8.042778968811035,
+        "train_loss": 1.4307104085552718,
+        "train_accuracy": 0.5361208309341365
+      }
+    ]
+  }
+}
